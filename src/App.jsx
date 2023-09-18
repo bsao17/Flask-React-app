@@ -4,7 +4,7 @@ import React from 'react';
 const App = () => {
     return(
         <div>
-            App page
+            Application React + flask python
         </div>
     )
 }
