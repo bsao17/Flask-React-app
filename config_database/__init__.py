@@ -10,8 +10,8 @@ def create_connection():
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            user='root',
-            password='root',
+            user=sys.argv[1],
+            password=sys.argv[2],
             database='acn_blog',
 
         )
@@ -20,3 +20,6 @@ def create_connection():
         print(f"Connexion impossible, {e.msg} empêche la connection à la base de donnée {db['db_name']}")
 
     return connection
+
+
+create_connection()
