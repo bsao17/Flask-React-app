@@ -7,4 +7,5 @@ app = Flask(__name__, template_folder='to-do/build', static_folder='static')
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    today = time.localtime()
+    return f"{today}"
