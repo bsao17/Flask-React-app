@@ -10,8 +10,8 @@ def create_connection():
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            user='root',
-            password='root',
+            user=sys.argv[1],
+            password=sys.argv[2],
             database='acn_blog',
 
         )
