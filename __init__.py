@@ -5,13 +5,13 @@ from mysql.connector import Error
 print(f"Connexion à la base de donnée {sys.argv[1]} !")
 
 
-def create_connection(host_name, user_name, user_password):
+def create_connection(*args):
     connection = None
     try:
         connection = mysql.connector.connect(
-            host=host_name,
-            user=user_name,
-            pwd=user_password
+            host=args[1],
+            user=args[2],
+            pwd=args[3]
         )
         print('Connection à la base de donnée, réussie !')
     except Error as e:

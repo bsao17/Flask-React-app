@@ -1,3 +1,3 @@
-import client
+import server
 
-client.app.run(debug=True)
+server.app.run(debug=True)
