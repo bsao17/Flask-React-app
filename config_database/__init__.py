@@ -20,3 +20,6 @@ def create_connection():
         print(f"Connexion impossible, {e.msg} empêche la connection à la base de donnée {db['db_name']}")
 
     return connection
+
+
+create_connection()

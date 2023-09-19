@@ -1,7 +1,6 @@
 import server
-import __init__
+import config_database
 
 
 if __name__ == '__main__':
-    __init__.create_connection()
     server.app.run(debug=True)
