@@ -1,6 +1,5 @@
 import server
-import config_database
+import models
 
 
-if __name__ == '__main__':
-    server.app.run(debug=True)
+server.app.run(debug=True)
