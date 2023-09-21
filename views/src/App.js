@@ -1,10 +1,21 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react'
 import './App.css';
+import axios from 'axios'
+
 
 function App() {
-  return (
+const [data, setData] = useState(null)
+
+useEffect(() => {
+   axios.get('users')
+      .then(result => setData(result))
+  }, []);
+console.log(data)
+    return (
     <div className="App">
+
         <h1 id='title'>La To-Do de LouLou</h1>
+        <div> voici mes données: {data}</div>
           <div id="form">
             <form style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center'}}>
               <div style={{'display': 'flex'}}>

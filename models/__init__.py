@@ -1,4 +1,3 @@
-import sys
 import mysql.connector
 from mysql.connector import Error
 
@@ -11,7 +10,6 @@ class Database:
         self.PASSWORD = password
 
     def query(self, query):
-        row = None
         with mysql.connector.connect(
                 host=self.URI,
                 database=self.DATABASE,
@@ -23,7 +21,7 @@ class Database:
                 cursor = con.cursor()
                 cursor.execute(query)
                 return cursor.fetchone()
-
+            con.close()
 
 
 acn_database = Database('localhost', 'acn_blog', 'root', 'root')
