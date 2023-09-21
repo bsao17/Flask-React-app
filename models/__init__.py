@@ -23,7 +23,6 @@ class Database:
                 return cursor.fetchone()
             con.close()
 
-
 acn_database = Database('localhost', 'acn_blog', 'root', 'root')
 
 try:

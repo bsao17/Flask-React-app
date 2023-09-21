@@ -15,28 +15,28 @@ useEffect(() => {
 console.log(data)
    return (
     <div className="App">
-        <h1 id='title'>La To-Do de LouLou</h1>
+        <h1 id='title'>Oh Tout Doux ... Là </h1>
 
           <div id="form">
             <form style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center'}}>
               <div style={{'display': 'flex'}}>
-                <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>Jour</label>
+                <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>Date</label>
                 <input type="date" id='day_input' />
               </div>
 
               <br/>
-              <div style={{'display': 'flex'}}>
-              <label style={{'marginRight': '10px'}} htmlFor="todo" id='day_label'>A faire</label>
+              <div style={{'display': 'flex','justifyContent': 'center', 'alignItems': 'center'}}>
+              <label style={{'marginRight': '10px'}} htmlFor="todo" id='day_label'>Tache</label>
               <textarea id='todo' />
               </div>
               <br/>
-              <div style={{'display': 'flex'}}>
-              <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>fermé</label>
+              <div style={{'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}}>
+              <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>clôturer</label>
               <input type="checkbox" id='day_input' />
               </div>
             </form>
           </div>
-        <div>Contact : {data}</div>
+        <div className="contact">Contact : {data}</div>
     </div>
   );
 }
