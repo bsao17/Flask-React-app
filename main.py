@@ -1,5 +1,5 @@
-import server
+import controller
 import models
 
 
-server.app.run(debug=True)
+controller.app.run(debug=True)

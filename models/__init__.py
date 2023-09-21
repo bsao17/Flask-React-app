@@ -1,4 +1,3 @@
-import sys
 import mysql.connector
 from mysql.connector import Error
 
@@ -11,7 +10,6 @@ class Database:
         self.PASSWORD = password
 
     def query(self, query):
-        rows = None
         with mysql.connector.connect(
                 host=self.URI,
                 database=self.DATABASE,
@@ -22,16 +20,14 @@ class Database:
                 print("connexion réussie !")
                 cursor = con.cursor()
                 cursor.execute(query)
-                rows = cursor.fetchall()
-                for row in rows:
-                    return row
-        return rows
-
+                return cursor.fetchone()
+            con.close()
 
 acn_database = Database('localhost', 'acn_blog', 'root', 'root')
 
 try:
     user_table = acn_database.query("SHOW TABLE STATUS FROM `acn_blog`;")
-    print(user_table)
+    rows = user_table
+    print(rows)
 except Error as e:
     print(f"Connexion impossible, {e.msg} !")
