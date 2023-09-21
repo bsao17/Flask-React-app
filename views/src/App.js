@@ -4,18 +4,19 @@ import axios from 'axios'
 
 
 function App() {
-const [data, setData] = useState(null)
+const [data, setData] = useState()
 
 useEffect(() => {
-   axios.get('users')
-      .then(result => setData(result))
+   axios.get('http://localhost:5000/database')
+      .then(result => {
+      return setData(result.data[0][1])
+      })
   }, []);
 console.log(data)
-    return (
+   return (
     <div className="App">
-
         <h1 id='title'>La To-Do de LouLou</h1>
-        <div> voici mes données: {data}</div>
+
           <div id="form">
             <form style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center'}}>
               <div style={{'display': 'flex'}}>
@@ -35,6 +36,7 @@ console.log(data)
               </div>
             </form>
           </div>
+        <div>Contact : {data}</div>
     </div>
   );
 }
