@@ -7,7 +7,7 @@ function App() {
 const [data, setData] = useState()
 
 useEffect(() => {
-   axios.get('http://localhost:5000/database')
+   axios.get('database')
       .then(result => {
       return setData(result.data[0][1])
       })

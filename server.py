@@ -1,8 +1,7 @@
 from flask_cors import CORS
 from models import Database
-import time
 
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 
 app = Flask(__name__)
 CORS(app)
@@ -14,7 +13,7 @@ def users():
 
 
 @app.route('/database')
-def data():
+def database():
     data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`users` LIMIT 1000;")
     return [data]
 
