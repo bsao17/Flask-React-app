@@ -2,17 +2,15 @@ import React, {useState, useEffect} from 'react'
 import './App.css';
 import axios from 'axios'
 
-
 function App() {
-const [data, setData] = useState()
-
-useEffect(() => {
-   axios.get('database')
-      .then(result => {
-      return setData(result.data[0][1])
-      })
-  }, []);
-console.log(data)
+    const [data, setData] = useState()
+    useEffect(() => {
+       axios.get('database')
+          .then(result => {
+          return setData(result.data[0][1])
+          })
+      }, []);
+    console.log(data)
    return (
     <div className="App">
         <h1 id='title'>Oh Tout Doux ... Là </h1>
@@ -23,7 +21,6 @@ console.log(data)
                 <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>Date</label>
                 <input type="date" id='day_input' />
               </div>
-
               <br/>
               <div style={{'display': 'flex','justifyContent': 'center', 'alignItems': 'center'}}>
               <label style={{'marginRight': '10px'}} htmlFor="todo" id='day_label'>Tache</label>
