@@ -14,7 +14,7 @@ def users():
 
 @app.route('/database')
 def database():
-    data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`users` LIMIT 1000;")
+    data = Database().query("SELECT * FROM `acn_blog`.`users` LIMIT 1000;")
     return [data]
 
 

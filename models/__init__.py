@@ -1,32 +1,30 @@
 import mysql.connector
 from mysql.connector import Error
+import sqlite3
+import os
 
 
 class Database:
-    def __init__(self, uri, database, username, password):
-        self.URI = uri
-        self.DATABASE = database
-        self.USERNAME = username
-        self.PASSWORD = password
+    database_file = 'myDatabase.db'
+    conn = sqlite3
+
+    def __init__(self):
+        if os.path.isfile(self.database_file):
+            self.conn.connect(self.database_file)
+        else:
+            self.conn.connect(self.database_file)
 
     def query(self, query):
-        with mysql.connector.connect(
-                host=self.URI,
-                database=self.DATABASE,
-                user=self.USERNAME,
-                password=self.PASSWORD,
-        ) as con:
-            if con.is_connected():
-                print("connexion réussie !")
-                cursor = con.cursor()
-                cursor.execute(query)
-                return cursor.fetchone()
-            con.close()
+        cursor = sqlite3.Cursor(sqlite3.Connection(self.database_file))
+        result = cursor.execute(query)
+        print(result.fetchall())
+        print(f"connexion à {self.conn} !")
+        return result.fetchone()    
 
-acn_database = Database('localhost', 'acn_blog', 'root', 'root')
+acn_database = Database()
 
 try:
-    user_table = acn_database.query("SHOW TABLE STATUS FROM `acn_blog`;")
+    user_table = acn_database.query("SELECT COUNT(*) FROM 'users';")
     rows = user_table
     print(rows)
 except Error as e:
