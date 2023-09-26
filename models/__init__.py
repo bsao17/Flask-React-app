@@ -17,11 +17,12 @@ class Database:
                 password=self.PASSWORD,
         ) as con:
             if con.is_connected():
-                print("connexion réussie !")
+                print("Vous êtes connecté à la base de données !")
                 cursor = con.cursor()
                 cursor.execute(query)
                 return cursor.fetchone()
             con.close()
+
 
 acn_database = Database('localhost', 'acn_blog', 'root', 'root')
 
