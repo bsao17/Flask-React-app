@@ -12,24 +12,24 @@ function App() {
       }, []);
     console.log(data)
    return (
-    <div className="App">
-        <h1 id='title'>Oh Tout Doux ... Là </h1>
+    <div className="App flex flex-col justify-center align-center">
+        <h1 id='title' className='text-2xl mt-10 mb-10'>Oh Tout Doux ... Là </h1>
 
           <div id="form">
-            <form style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center'}}>
-              <div style={{'display': 'flex'}}>
-                <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>Date</label>
-                <input type="date" id='day_input' />
+            <form className='m-auto flex flex-col w-1/4'>
+              <div className='flex flex-col w-full'>
+                <label className='m-2' htmlFor="day_input" id='day_label'>Date</label>
+                <input type="date" id='day_input' className='border border-black rounded w-full p-2' />
               </div>
               <br/>
-              <div style={{'display': 'flex','justifyContent': 'center', 'alignItems': 'center'}}>
-              <label style={{'marginRight': '10px'}} htmlFor="todo" id='day_label'>Tache</label>
-              <textarea id='todo' />
+              <div className='flex flex-col w-full'>
+              <label className='m-2' htmlFor="todo" id='day_label'>Tache</label>
+              <textarea id='todo' className='border border-black rounded w-full p-2' />
               </div>
               <br/>
-              <div style={{'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}}>
-              <label style={{'marginRight': '10px'}} htmlFor="day_input" id='day_label'>clôturer</label>
-              <input type="checkbox" id='day_input' />
+              <div className='flex flex-col justify-center items-center'>
+              <label className='me-5' htmlFor="day_input" id='day_label'>clôturer</label>
+              <input type="checkbox" id='day_input' className='text-center' />
               </div>
             </form>
           </div>

@@ -10,20 +10,16 @@
         {{form.crsf_token}}
         <ul>
             <li>
-                {{form.user.label}}
-                {{form.user()}}
+                {{form.username.label}}
+                {{form.username()}}
             </li>
             <li>
-                {{form.date.label}}
-                {{form.date()}}
+                {{form.email.label}}
+                {{form.email()}}
             </li>
             <li>
-                {{form.task.label}}
-                {{form.task()}}
-            </li>
-            <li>
-                {{form.closed.label}}
-                {{form.closed()}}
+                {{form.accept_rules.label}}
+                {{form.accept_rules()}}
             </li>
         </ul>
         <input type="submit" value="Enregistrer">

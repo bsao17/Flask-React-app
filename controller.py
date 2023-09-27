@@ -6,8 +6,8 @@ from models import Database
 from dotenv import load_dotenv
 
 from flask import Flask, render_template
-from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, IntegerField, BooleanField, RadioField, DateField
+from flask_wtf import FlaskForm, Form
+from wtforms import StringField, TextAreaField, IntegerField, BooleanField, RadioField, DateField, validators
 from wtforms.validators import InputRequired, Length
 
 load_dotenv()
@@ -23,9 +23,15 @@ class Todo_Form(FlaskForm):
     closed = BooleanField('Available', default='checked')
 
 
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=25)])
+    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
+
+
 @app.route("/", methods=('GET', 'POST'))
 def index():
-    form = Todo_Form()
+    form = RegistrationForm()
     return render_template("index.html", form=form)
 
 
