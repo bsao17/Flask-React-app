@@ -2,12 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>database tables</title>
+    <title>To-Do Backend</title>
 </head>
 <body>
-<h1>Les données utilisateurs</h1>
-    <div>
-        <p>{{ data }}</p>
-    </div>
+    <h1>Welcome on To-do Server</h1>
+    <form method="post">
+        {{form.crsf_token}}
+        <ul>
+            <li>
+                {{form.username.label}}
+                {{form.username()}}
+            </li>
+            <li>
+                {{form.email.label}}
+                {{form.email()}}
+            </li>
+            <li>
+                {{form.accept_rules.label}}
+                {{form.accept_rules()}}
+            </li>
+        </ul>
+        <input type="submit" value="Enregistrer">
+    </form>
 </body>
 </html>
