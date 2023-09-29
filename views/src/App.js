@@ -2,12 +2,18 @@ import React, {useState, useEffect} from 'react'
 import './App.css';
 import axios from 'axios'
 
+
 function App() {
     const [data, setData] = useState()
     const [click, setClick] = useState(true)
     
     const toggle_click_on = 'm-auto mt-5 bg-red-500 border border-red-500 text-white p-2 w-1/2 rounded'
     const toggle_click_off = 'm-auto mt-5 bg-red-300 border border-red-500 text-white p-2 w-1/2 rounded'
+
+    const toggleClick = (e)=>{
+      e.preventDefault()
+      setClick(!click)
+    }
 
     useEffect(() => {
       try {
@@ -40,7 +46,7 @@ function App() {
               <label className='me-5' htmlFor="day_input" id='day_label'>clôturer</label>
               <input type="checkbox" id='day_input' className='text-center' />
               </div>
-              <button className={toggle_click_on}>Enregistrer</button>
+              <button className={click ? toggle_click_off : toggle_click_on} onClick={toggleClick}>Enregistrer</button>
             </form>
           </div>
         <div className="contact">Contact : {data}</div>
