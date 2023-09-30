@@ -53,7 +53,9 @@ function App() {
               <button className={click ? toggle_click_off : toggle_click_on} onClick={toggleClick}>Enregistrer</button>
             </form>
           </div>
-        <Tasks username={data[1]} date={data[2]} task={data[3]}/>
+          <div id="task">
+            <Tasks username={data[1]} date={data[2]} task={data[3]}/>
+          </div>
     </div>
   );
 }

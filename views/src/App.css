@@ -19,3 +19,11 @@
 .App-link {
   color: #61dafb;
 }
+
+#task {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
