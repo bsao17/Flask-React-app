@@ -10,7 +10,7 @@
 </head>
 <body>
     {% block body %}  
-    <h1>Welcome on To-do Server</h1>
+    <h1 id="title">Welcome on To-do Server</h1>
     <form method="post" class="login_form">
         {{form.crsf_token}}
     <div id="username_form">
@@ -25,13 +25,8 @@
             {{form.email()}}
         </div>
     </div>
-    <div id="accept_form">
-        <label>{{form.accept_rules.label}}</label>
-        <div id="accept">
-            {{form.accept_rules()}}
-        </div>
-    </div>
-        <input id="button" type="submit" value="Enregistrer">
+
+        <input id="button" type="submit" value="Se connecter">
     </form>
     {% endblock %}
 </body>
