@@ -1,0 +1,63 @@
+#accept {
+    margin: auto;
+    padding: 10px;
+}
+
+#button {
+    width: 50%;
+    margin: auto;
+    height: 30px;
+    background-color: #e44242;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    box-shadow: #543434 2px 2px 2px;
+}
+
+
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f7f6ea;
+}
+
+h1 {
+    text-align: center;
+}
+
+#email_form, #username_form, #accept_form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login_form {
+    width: 28%;
+    margin: auto;
+    padding: 2%;
+    border-radius: 9px;
+    background: #F7F6EA;
+    box-shadow: inset 16px 16px 19px #b7b6ad,
+                inset -16px -16px 19px #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+.material-symbols-outlined {
+    font-size: 0.5rem;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 5,
+    'opsz' 24,
+
+}
+
+#icon_email {
+    font-size: 1rem;
+    margin: 0;
+}
+
+#username, #email {
+    margin: 10px;
+}

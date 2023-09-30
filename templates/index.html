@@ -4,29 +4,34 @@
     {% block head %}
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" ></link>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />    
     <title>To-Do Backend</title>
     {% endblock %}
 </head>
 <body>
     {% block body %}  
     <h1>Welcome on To-do Server</h1>
-    <form method="post">
+    <form method="post" class="login_form">
         {{form.crsf_token}}
-        <ul>
-            <li>
-                {{form.username.label}}
-                {{form.username()}}
-            </li>
-            <li>
-                {{form.email.label}}
-                {{form.email()}}
-            </li>
-            <li>
-                {{form.accept_rules.label}}
-                {{form.accept_rules()}}
-            </li>
-        </ul>
-        <input type="submit" value="Enregistrer">
+    <div id="username_form">
+        <label>{{form.username.label}}</label>
+        <div>
+            {{form.username()}}
+        </div>
+    </div>
+    <div id="email_form">
+        <label html="email">{{form.email.label}}</label>
+        <div>
+            {{form.email()}}
+        </div>
+    </div>
+    <div id="accept_form">
+        <label>{{form.accept_rules.label}}</label>
+        <div id="accept">
+            {{form.accept_rules()}}
+        </div>
+    </div>
+        <input id="button" type="submit" value="Enregistrer">
     </form>
     {% endblock %}
 </body>
