@@ -12,18 +12,23 @@
     border-radius: 5px;
     color: white;
     box-shadow: #543434 2px 2px 2px;
+    font-size: 1.2rem;
+    margin-top: 10px;
 }
 
 
 
 html, body {
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
     background-color: #f7f6ea;
 }
 
-h1 {
+#title {
     text-align: center;
+    color: #191f5f;
+    text-shadow:  1px 1px 2px #686f00;
 }
 
 #email_form, #username_form, #accept_form {

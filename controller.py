@@ -35,15 +35,15 @@ def index():
     return render_template("index.html", form=form)
 
 
-@app.route('/users')
-def users():
+@app.route('/tasks')
+def tasks():
     data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`tasks` LIMIT 1000;")
-    return render_template('users.html', data=data)
+    return [data]
 
 
 @app.route('/database')
 def database():
-    data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`tasks` LIMIT 1000;")
+    data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`users` LIMIT 1000;")
     return [data]
 
 

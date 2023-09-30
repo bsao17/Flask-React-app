@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
+import Tasks from "./components/Tasks"
 import './App.css';
 import axios from 'axios'
 
 
 function App() {
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
     const [click, setClick] = useState(true)
     
     const toggle_click_on = 'm-auto mt-5 bg-red-500 border border-red-500 text-white p-2 w-1/2 rounded'
@@ -15,16 +16,19 @@ function App() {
       setClick(!click)
     }
 
+    let index = 0
+
     useEffect(() => {
       try {
-         axios.get('/database')
-           .then(result => {
-           return setData(result.data[0][1])
+         axios.get('/tasks')
+           .then((result) => {
+           console.log(result.data)
+           return setData(result.data[index])
            })
       } catch (error) {
         console.error(error)
       }
-      }, [data]);
+      }, []);
 
    return (
     <div className="App flex flex-col justify-center align-center">
@@ -49,7 +53,7 @@ function App() {
               <button className={click ? toggle_click_off : toggle_click_on} onClick={toggleClick}>Enregistrer</button>
             </form>
           </div>
-        <div className="contact">Contact : {data}</div>
+        <Tasks username={data[1]} date={data[2]} task={data[3]}/>
     </div>
   );
 }
