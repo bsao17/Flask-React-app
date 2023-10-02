@@ -1,10 +1,7 @@
 import os
-
-import dotenv
 from flask_cors import CORS
 from models import Database
 from dotenv import load_dotenv
-
 from flask import Flask, render_template
 from flask_wtf import FlaskForm, Form
 from wtforms import StringField, TextAreaField, IntegerField, BooleanField, RadioField, DateField, validators

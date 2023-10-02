@@ -34,23 +34,23 @@ function App() {
     <div className="App flex flex-col justify-center align-center">
         <h1 id='title' className='text-2xl mt-10 mb-10'>Oh Tout Doux ... Là </h1>
 
-          <div id="form" className='border border-black w-1/4 m-auto rounded' onSubmitCapture={()=>console.log("c'est fait !!!")}>
+          <div id="form" className='w-1/4 m-auto' onSubmitCapture={()=>console.log("c'est fait !!!")}>
             <form className='m-5 flex flex-col'>
               <div className='flex flex-col w-full'>
-                <label className='m-2' htmlFor="day_input" id='day_label'>Date</label>
-                <input type="date" id='day_input' className='border border-black rounded w-full p-2' />
+                <label className='m-2 text-white' htmlFor="day_input" id='day_label'>Date</label>
+                <input type="date" id='day_input' className='border border-black rounded w-full text-black-500 p-2' />
               </div>
               <br/>
               <div className='flex flex-col w-full'>
-              <label className='m-2' htmlFor="todo" id='day_label'>Tache</label>
+              <label className='m-2 text-white' htmlFor="todo" id='day_label'>Tache</label>
               <textarea id='todo' className='border border-black rounded w-full p-2' />
               </div>
               <br/>
               <div className='flex flex-col justify-center items-center'>
-              <label className='me-5' htmlFor="day_input" id='day_label'>clôturer</label>
+              <label className='me-5 text-white' htmlFor="day_input" id='day_label'>clôturer</label>
               <input type="checkbox" id='day_input' className='text-center' />
               </div>
-              <button className={click ? toggle_click_off : toggle_click_on} onClick={toggleClick}>Enregistrer</button>
+              <button id="button" className={click ? toggle_click_off : toggle_click_on} onClick={toggleClick}>Enregistrer</button>
             </form>
           </div>
           <div id="task">
