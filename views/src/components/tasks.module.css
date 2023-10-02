@@ -1,0 +1,45 @@
+#title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#username {
+    color: white;
+}
+
+#username_item {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #95d0f0;
+}
+
+#date {
+    color: white;
+}
+
+#date_item {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #95d0f0;
+}
+
+#task {
+    color: white;
+}
+
+#task_item {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #95d0f0;
+}
+
+#day_input {
+    color: #95d0f0;
+}
+
+#title {
+    font-size: calc(10px + 3vmin);
+    color: white;
+}
+
