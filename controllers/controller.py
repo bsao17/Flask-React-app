@@ -2,10 +2,11 @@ import os
 from flask_cors import CORS
 from models import Database
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_wtf import FlaskForm, Form
-from wtforms import StringField, TextAreaField, IntegerField, BooleanField, RadioField, DateField, validators
+from wtforms import StringField, TextAreaField, BooleanField, DateField, validators, PasswordField
 from wtforms.validators import InputRequired, Length
+from dataclasses import dataclass
 
 load_dotenv()
 app = Flask(__name__)
@@ -23,13 +24,28 @@ class Todo_Form(FlaskForm):
 class RegistrationForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    password = PasswordField('Password', [
+        validators.data_required(),
+        validators.Length(min=8),
+        validators.equal_to('confirm', message="Passwords must match")
+    ])
+    confirm = PasswordField('Repeat Password')
     accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
 
 
-@app.route("/", methods=('GET', 'POST'))
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route("/login")
 def index():
     form = RegistrationForm()
-    return render_template("index.html", form=form)
+    if request.method == 'POST' and form.validate():
+        username = request.form['username']
+        email = request.form['email']
+        passsword = request.form['password']
+        user = User()
+    return render_template("login.html", form=form)
 
 
 @app.route('/tasks')

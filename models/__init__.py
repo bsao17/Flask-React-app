@@ -2,6 +2,8 @@ import mysql.connector
 from mysql.connector import Error
 
 AUTHLIB_INSECURE_TRANSPORT = True
+
+
 class Database:
     def __init__(self, uri, database, username, password):
         self.URI = uri
