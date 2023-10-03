@@ -10,7 +10,7 @@ from wtforms import StringField, TextAreaField, BooleanField, DateField, validat
 from wtforms.validators import InputRequired, Length
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
+from colorama import Fore, Back, Style, init
 
-AUTHLIB_INSECURE_TRANSPORT = True
-
-print("Application lancée")
+init()
+print(Fore.RED + Style.BRIGHT + Back.GREEN + "To-Do application started" + Style.RESET_ALL)
