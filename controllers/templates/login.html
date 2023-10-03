@@ -14,7 +14,7 @@
         {{form.crsf_token}}
     <div id="username_form">
         <label>{{form.username.label}}</label>
-        <div>
+        <div id="username">
             {{form.username()}}
         </div>
     </div>
@@ -25,13 +25,13 @@
         </div>
     </div>
     <div id="password_form">
-            <label html="password">{{form.email.label}}</label>
+            <label html="password">{{form.password.label}}</label>
             <div id="password">
                 {{form.password()}}
             </div>
         </div>
     <div id="confirm_password_form">
-                <label html="confirm">{{form.email.label}}</label>
+                <label html="confirm">{{form.confirm.label}}</label>
                 <div id="confirm">
                     {{form.confirm()}}
                 </div>

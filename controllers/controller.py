@@ -1,12 +1,4 @@
-import os
-from flask_cors import CORS
-from models import Database
-from dotenv import load_dotenv
-from flask import Flask, render_template, request
-from flask_wtf import FlaskForm, Form
-from wtforms import StringField, TextAreaField, BooleanField, DateField, validators, PasswordField
-from wtforms.validators import InputRequired, Length
-from dataclasses import dataclass
+from models import *
 
 load_dotenv()
 app = Flask(__name__)
@@ -33,19 +25,48 @@ class RegistrationForm(Form):
     accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
 
 
+login_manager = LoginManager()
+login_manager.init_app(app=app)
+
+
+@login_manager.request_loader
+def load_user(user_id):
+    return user_id
+
+
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def Login():
+    form = RegistrationForm()
+    if request.method == 'POST' and form.validate():
+        user = User(request.form['email'])
+        password = User(request.form['password'])
+        print(request.form['email'])
+        login_user(user)
+        flash('Logged in successfully.')
+        return redirect(url_for('profile'))
+    return render_template('login.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('login')
+
+
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
-
-@app.route("/login")
-def index():
-    form = RegistrationForm()
-    if request.method == 'POST' and form.validate():
-        username = request.form['username']
-        email = request.form['email']
-        passsword = request.form['password']
-        user = User()
-    return render_template("login.html", form=form)
 
 
 @app.route('/tasks')
