@@ -13,4 +13,11 @@ from sqlalchemy.orm import DeclarativeBase
 from colorama import Fore, Back, Style, init
 
 init()
-print(Fore.RED + Style.BRIGHT + Back.GREEN + "To-Do application started" + Style.RESET_ALL)
+print(Fore.LIGHTBLUE_EX + Style.BRIGHT + Back.BLUE + "To-Do application started" + Style.RESET_ALL)
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+db = SQLAlchemy(model_class=Base)

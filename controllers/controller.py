@@ -1,8 +1,12 @@
+import os
+
+import dotenv
+
 from models import *
 
-load_dotenv()
+load_dotenv(dotenv_path="../.flaskenv")
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 CORS(app)
 
 
