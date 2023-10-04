@@ -9,7 +9,7 @@ mais le potentiel de liberté d'architecture et de développement qu'offre Flaks
 C'est donc pour cela que je suis parti sur un projet simpliste afin que la structure puisse être transposable.
 
 Les requêtes du client au serveur se font grâce à axios et au proxy ajouté au package.json afin de faciliter la gestion
-CORS tout en permettant d'utiliser des url relative dans axios.
+CORS tout en permettant d'utiliser des url relatives dans axios.
 
 ## Page frontend "to-do"
 ![to-do client](static/assets/page_frontend.png)

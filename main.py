@@ -1,5 +1,3 @@
-import controller
-import models
-
+from controllers import controller
 
 controller.app.run(debug=True)
