@@ -85,14 +85,14 @@ def tasks():
     return {'tasks': tasks}
 
 
-@app.route('/database')
+@app.route('/users')
 def database():
     stmt = text('SELECT * FROM users')
     result = db.session.execute(stmt)
     users = []
     for row in result:
         users.append({'id': row[0], 'username': row[1], 'email': row[2],
-                      'password': row[3]})
+                      'password': "prohibited"})
     return {'users': users}
 
 
