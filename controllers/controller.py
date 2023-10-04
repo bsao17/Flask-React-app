@@ -4,9 +4,11 @@ import dotenv
 
 from models import *
 
-load_dotenv(dotenv_path="../.flaskenv")
+
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+load_dotenv(dotenv_path=".flaskenv")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
+db.init_app(app)
 CORS(app)
 
 
@@ -75,14 +77,23 @@ def home():
 
 @app.route('/tasks')
 def tasks():
-    data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`tasks` LIMIT 1000;")
-    return [data]
+    stmt = "SELECT * FROM tasks"
+    result = db.session.execute(text(stmt))
+    tasks = []
+    for task in result:
+        tasks.append({'id': task[0], 'name': task[1], 'task_date': task[2], 'task': task[3], 'closed': task[4]})
+    return {'tasks': tasks}
 
 
 @app.route('/database')
 def database():
-    data = Database('localhost', 'acn_blog', 'root', 'root').query("SELECT * FROM `acn_blog`.`users` LIMIT 1000;")
-    return [data]
+    stmt = text('SELECT * FROM users')
+    result = db.session.execute(stmt)
+    users = []
+    for row in result:
+        users.append({'id': row[0], 'username': row[1], 'email': row[2],
+                      'password': row[3]})
+    return {'users': users}
 
 
 @app.errorhandler(500)
