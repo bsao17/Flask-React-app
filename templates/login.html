@@ -10,7 +10,7 @@
 <body>
     {% block body %}
     <h1 id="title">Welcome on To-do Server</h1>
-    <form action="users.html" method="POST" class="login_form">
+    <form method="POST" class="login_form">
         {{form.crsf_token}}
     <div id="username_wrapper">
         <label>{{form.username.label}}</label>
@@ -39,8 +39,8 @@
         <button type="submit" class="button">
             <span class="button_lg">
                 <span class="button_sl"></span>
-            <span class="button_text">S'enregistrer</span>
-    </span>
+                <span class="button_text">S'enregistrer</span>
+            </span>
         </button>
     </form>
     {% endblock %}
