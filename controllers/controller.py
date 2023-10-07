@@ -1,13 +1,15 @@
 import os
 
+import MySQLdb.cursors
 import dotenv
 
 from models import *
 
-
-app = Flask(__name__)
 load_dotenv(dotenv_path=".flaskenv")
+app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
+login_manager = LoginManager()
+login_manager.init_app(app=app)
 db.init_app(app)
 CORS(app)
 
@@ -24,15 +26,11 @@ class RegistrationForm(Form):
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
     password = PasswordField('Password', [
         validators.data_required(),
-        validators.Length(min=8),
+        validators.Length(min=4),
         validators.equal_to('confirm', message="Passwords must match")
     ])
     confirm = PasswordField('Repeat Password')
     accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
-
-
-login_manager = LoginManager()
-login_manager.init_app(app=app)
 
 
 @login_manager.request_loader
@@ -45,14 +43,14 @@ class User(UserMixin):
         self.id = id
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def Login():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     form = RegistrationForm()
     if request.method == 'POST' and form.validate():
-        user = User(request.form['email'])
-        password = User(request.form['password'])
-        print(request.form['email'])
-        login_user(user)
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+
         flash('Logged in successfully.')
         return redirect(url_for('profile'))
     return render_template('login.html', form=form)
