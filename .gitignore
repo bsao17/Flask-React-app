@@ -3,4 +3,5 @@ node_modules
 .env
 venv
 .flaskenv
+site.db
 __pycache__/

@@ -1,5 +1,6 @@
-import mysql.connector
-from mysql.connector import Error
+
+
+from flask_mysqldb import MySQL, cursors
 import os
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -22,3 +23,5 @@ class Base(DeclarativeBase):
 
 
 db = SQLAlchemy(model_class=Base)
+
+

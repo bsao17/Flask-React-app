@@ -10,34 +10,38 @@
 <body>
     {% block body %}
     <h1 id="title">Welcome on To-do Server</h1>
-    <form method="post" class="login_form">
+    <form action="/profile" method="post" class="login_form">
         {{form.crsf_token}}
-    <div id="username_form">
+    <div id="username_wrapper">
         <label>{{form.username.label}}</label>
-        <div id="username">
+        <div id="username_input">
             {{form.username()}}
         </div>
     </div>
-    <div id="email_form">
+    <div id="email_wrapper">
         <label html="email">{{form.email.label}}</label>
-        <div id="email">
+        <div id="email_input">
             {{form.email()}}
         </div>
     </div>
-    <div id="password_form">
+    <div id="password_wrapper">
             <label html="password">{{form.password.label}}</label>
-            <div id="password">
+            <div id="password_input">
                 {{form.password()}}
             </div>
         </div>
-    <div id="confirm_password_form">
+    <div id="confirm_password_wrapper">
                 <label html="confirm">{{form.confirm.label}}</label>
-                <div id="confirm">
+                <div id="confirm_input">
                     {{form.confirm()}}
                 </div>
             </div>
-
-        <input id="button" type="submit" value="Se connecter">
+        <button type="submit" class="button">
+            <span class="button_lg">
+                <span class="button_sl"></span>
+                <span class="button_text">S'enregistrer</span>
+            </span>
+        </button>
     </form>
     {% endblock %}
 </body>
