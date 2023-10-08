@@ -6,11 +6,14 @@ from models import *
 
 load_dotenv(dotenv_path=".flaskenv")
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv('SQLALCHEMY_DATABASE_URI')
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
+print(f"SQLALCHEMY_DATABASE_CONNECT = {os.getenv('SQLALCHEMY_DATABASE_CONNECT')}")
 login_manager = LoginManager()
 login_manager.init_app(app=app)
 db.init_app(app)
 CORS(app)
+with app.app_context():
+    db.create_all()
 
 
 class Todo_Form(FlaskForm):
@@ -34,10 +37,10 @@ class RegistrationForm(Form):
 
 @login_manager.request_loader
 def load_user(user_id):
-    return user_id
+    pass
 
 
-class User(db.Model, UserMixin):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -77,8 +80,7 @@ def signup():
         login_user(new_user)
 
         flash('Inscription réussie et connexion effectuée.')
-        db.create_all()
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile.html'))
     return render_template('login.html', form=form)
 
 
@@ -88,7 +90,7 @@ def logout():
     return redirect('login')
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     return render_template('profile.html')
@@ -103,10 +105,10 @@ def home():
 def tasks():
     stmt = "SELECT * FROM tasks"
     result = db.session.execute(text(stmt))
-    tasks = []
+    all_tasks = []
     for task in result:
-        tasks.append({'id': task[0], 'name': task[1], 'task_date': task[2], 'task': task[3], 'closed': task[4]})
-    return {'tasks': tasks}
+        all_tasks.append({'id': task[0], 'name': task[1], 'task_date': task[2], 'task': task[3], 'closed': task[4]})
+    return {'tasks': all_tasks}
 
 
 @app.route('/users')

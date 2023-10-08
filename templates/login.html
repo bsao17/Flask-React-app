@@ -10,7 +10,7 @@
 <body>
     {% block body %}
     <h1 id="title">Welcome on To-do Server</h1>
-    <form method="POST" class="login_form">
+    <form action="/profile" method="post" class="login_form">
         {{form.crsf_token}}
     <div id="username_wrapper">
         <label>{{form.username.label}}</label>

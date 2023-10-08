@@ -1,34 +1,35 @@
-# Projet To-Do Flask serveur et React Client
 
-Ce projet n'a pour but que de réunir au sein d'une seul application
-un backend avec flask de Python et le frontend avec React.
-
-initialement Flask fonctionne avec son propre moteur de rendu Jinja2, 
-mais le potentiel de liberté d'architecture et de développement qu'offre Flaks et React et très intéressant.
-
-C'est donc pour cela que je suis parti sur un projet simpliste afin que la structure puisse être transposable.
-
-Les requêtes du client au serveur se font grâce à axios et au proxy ajouté au package.json afin de faciliter la gestion
-CORS tout en permettant d'utiliser des url relatives dans axios.
-
-## Page frontend "to-do"
-![to-do client](static/assets/page_frontend.png)
-
-## Accès au server
-![to-do client](static/assets/page_backend.png)
+![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
 
-# Flask Server and React Client To-Do Project
-The sole purpose of this project is to bring together within a single application a backend with Python's Flask and the frontend with React.
+# Flask React Application
 
-Initially, Flask operates with its own rendering engine, Jinja2, but the potential for architectural freedom and development that Flask and React offer is very interesting.
+An application with Python Flask backend and React frontend
 
-That's why I embarked on a simplistic project so that the structure can be transferable.
 
-Client requests to the server are made using axios and the proxy added to the package.json to facilitate CORS management while allowing the use of relative URLs in axios.
+## Run Locally Backend
 
-## Frontend to-do page
-![to-do client](static/assets/page_frontend.png)
+Clone the project
 
-## Server access
-![to-do client](static/assets/page_backend.png)
+```bash
+  git clone https://github.com/bsao17/Flask-React-app
+```
+
+Go to the project directory
+
+```bash
+  cd Flask_React_app
+```
+
+Install dependencies
+
+```bash
+  pip install -r requirements.txt
+```
+
+Start the server
+
+```bash
+  py main.py
+```
+
