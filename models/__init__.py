@@ -18,10 +18,8 @@ init()
 print(Fore.LIGHTBLUE_EX + Style.BRIGHT + Back.BLUE + "To-Do application started" + Style.RESET_ALL)
 
 
-class Base(DeclarativeBase):
-    pass
 
 
-db = SQLAlchemy(model_class=Base)
+
 
 
