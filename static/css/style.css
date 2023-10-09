@@ -176,6 +176,7 @@ html, body {
 }
 
 .login_form {
+    position: relative;
     width: 18em;
     margin: auto;
     padding: 2%;
@@ -205,4 +206,24 @@ html, body {
     border-radius: 9999px;
     box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
     color: #000000;
+}
+
+.connection_success {
+    margin: auto;
+    color: green;
+    list-style: none;
+    padding: 20px;
+    font-size: 1.2rem;
+}
+.connection_failed {
+    position: absolute;
+    bottom:
+    text-align: center;
+    width: 10em;
+    margin: auto;
+    color: red;
+    background-color: black;
+    list-style: none;
+    padding: 20px;
+    font-size: 1.2rem;
 }
