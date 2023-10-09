@@ -1,7 +1,5 @@
-
-
-from flask_mysqldb import MySQL, cursors
 import os
+from flask_mysqldb import MySQL, cursors
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask import Flask, request, redirect, url_for, render_template, flash

@@ -1,28 +1,29 @@
-import os
-
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import mapped_column, Mapped
 from werkzeug.security import generate_password_hash
 import dotenv
-
 from models import *
+
+load_dotenv(dotenv_path=".flaskenv")
+
+app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
 
 
 class Base(DeclarativeBase):
     pass
 
 
-load_dotenv(dotenv_path=".flaskenv")
-app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 db = SQLAlchemy(model_class=Base)
-login_manager = LoginManager()
-login_manager.init_app(app=app)
 db.init_app(app)
-app.secret_key = os.getenv("SECRET_KEY")
-CORS(app)
 with app.app_context():
     db.create_all()
+
+login_manager = LoginManager()
+login_manager.init_app(app=app)
+
+CORS(app)
 
 
 class Todo_Form(FlaskForm):
@@ -90,7 +91,8 @@ def signup():
             flash('Inscription réussie et connexion effectuée.', "connection_success")
         except Exception as e:
             flash('Erreur de connexion.', "login_failed")
-            print(e)
+            print("Erreur d'authentification:" + str(e))
+            redirect(url_for('signup'))
 
         return redirect(url_for('profile'))
     return render_template('signup.html', form=form)
