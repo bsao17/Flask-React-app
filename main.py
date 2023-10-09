@@ -19,6 +19,7 @@ db = SQLAlchemy(model_class=Base)
 login_manager = LoginManager()
 login_manager.init_app(app=app)
 db.init_app(app)
+app.secret_key = os.getenv("SECRET_KEY")
 CORS(app)
 with app.app_context():
     db.create_all()
@@ -43,7 +44,7 @@ class RegistrationForm(Form):
     accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
 
 
-@login_manager.request_loader
+@login_manager.user_loader
 def load_user(user_id):
     def __init__(self, username, email, password):
         self.id = user_id
@@ -52,7 +53,7 @@ def load_user(user_id):
         self.password = password
 
 
-class User(Base):
+class User(Base, UserMixin):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -73,32 +74,35 @@ def signup():
             email=request.form["email"],
             password=generate_password_hash(request.form['password'], "sha256")
         )
-        password_confirm = generate_password_hash(request.form['confirm'], "sha256")
 
-        # Enregistrer l'utilisateur
-        db.session.add(user)
-        db.session.commit()
+        # Vérifier que les mots de passe sont identiques
+        if request.form['password'] != request.form['confirm']:
+            flash('Les mots de passe ne correspondent pas.', "connection_failed")
+            return render_template('signup.html', form=form)
+        else:
+            # Enregistrer l'utilisateur
+            db.session.add(user)
+            db.session.commit()
+
+        try:
+            # Confirmer l'authentification
+            login_user(user)
+            flash('Inscription réussie et connexion effectuée.', "connection_success")
+        except Exception as e:
+            flash('Erreur de connexion.', "login_failed")
+            print(e)
+
         return redirect(url_for('profile'))
     return render_template('signup.html', form=form)
 
-        # Vérifier que les mots de passe sont identiques
-        # if password != password_confirm:
-        #     flash('Les mots de passe ne correspondent pas.')
-        #     return render_template('signup.html', form=form)
-        #
-        # Vérifier si l'utilisateur existe déjà
-        # existing_user = User.query.filter_by(username=username).first()
-        # if existing_user:
-        #     flash('Ce nom d\'utilisateur est déjà pris.')
-        #     return# render_template('signup.html', form=form)
-        #
-        # hashed_password = generate_password_hash(password, method='sha256')
-        #
-        # Confirmer l'authentification
-        # login_user(new_user)
-        #
-        # flash('Inscription réussie et connexion effectuée.')
-        # return redirect(url_for('home'))
+    #
+    # Vérifier si l'utilisateur existe déjà
+    # existing_user = User.query.filter_by(username=username).first()
+    # if existing_user:
+    #     flash('Ce nom d\'utilisateur est déjà pris.')
+    #     return# render_template('signup.html', form=form)
+
+    # return redirect(url_for('home'))
 
 
 @app.route('/logout')
@@ -108,7 +112,7 @@ def logout():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def profile():
     return render_template('profile.html')
 
