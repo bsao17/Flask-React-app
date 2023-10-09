@@ -1,16 +1,25 @@
 import os
+
+from sqlalchemy import Integer, String
+from sqlalchemy.orm import mapped_column, Mapped
 from werkzeug.security import generate_password_hash
 import dotenv
 
 from models import *
 
+
+class Base(DeclarativeBase):
+    pass
+
+
 load_dotenv(dotenv_path=".flaskenv")
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-print(f"SQLALCHEMY_DATABASE_CONNECT = {os.getenv('SQLALCHEMY_DATABASE_CONNECT')}")
+db = SQLAlchemy(model_class=Base)
 login_manager = LoginManager()
 login_manager.init_app(app=app)
 db.init_app(app)
+app.secret_key = os.getenv("SECRET_KEY")
 CORS(app)
 with app.app_context():
     db.create_all()
@@ -35,16 +44,22 @@ class RegistrationForm(Form):
     accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
 
 
-@login_manager.request_loader
+@login_manager.user_loader
 def load_user(user_id):
-    pass
+    def __init__(self, username, email, password):
+        self.id = user_id
+        self.username = username
+        self.email = email
+        self.password = password
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+class User(Base, UserMixin):
+    __tablename__ = "user"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String)
+    password: Mapped[str] = mapped_column(String, unique=True, nullable=False)
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -53,35 +68,41 @@ class User(db.Model):
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegistrationForm()
-    if request.method == 'POST' and form.validate():
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        password_confirm = request.form['password_confirm']
+    if request.method == 'POST':
+        user = User(
+            username=request.form["username"],
+            email=request.form["email"],
+            password=generate_password_hash(request.form['password'], "sha256")
+        )
 
         # Vérifier que les mots de passe sont identiques
-        if password != password_confirm:
-            flash('Les mots de passe ne correspondent pas.')
-            return render_template('login.html', form=form)
+        if request.form['password'] != request.form['confirm']:
+            flash('Les mots de passe ne correspondent pas.', "connection_failed")
+            return render_template('signup.html', form=form)
+        else:
+            # Enregistrer l'utilisateur
+            db.session.add(user)
+            db.session.commit()
 
-        # Vérifier si l'utilisateur existe déjà
-        existing_user = User.query.filter_by(username=username).first()
-        if existing_user:
-            flash('Ce nom d\'utilisateur est déjà pris.')
-            return render_template('login.html', form=form)
+        try:
+            # Confirmer l'authentification
+            login_user(user)
+            flash('Inscription réussie et connexion effectuée.', "connection_success")
+        except Exception as e:
+            flash('Erreur de connexion.', "login_failed")
+            print(e)
 
-        # Créer le nouvel utilisateur
-        hashed_password = generate_password_hash(password, method='sha256')
-        new_user = User(username=username, email=email, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+        return redirect(url_for('profile'))
+    return render_template('signup.html', form=form)
 
-        # Confirmer l'authentification
-        login_user(new_user)
+    #
+    # Vérifier si l'utilisateur existe déjà
+    # existing_user = User.query.filter_by(username=username).first()
+    # if existing_user:
+    #     flash('Ce nom d\'utilisateur est déjà pris.')
+    #     return# render_template('signup.html', form=form)
 
-        flash('Inscription réussie et connexion effectuée.')
-        return redirect(url_for('profile.html'))
-    return render_template('login.html', form=form)
+    # return redirect(url_for('home'))
 
 
 @app.route('/logout')
@@ -101,31 +122,9 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/tasks')
-def tasks():
-    stmt = "SELECT * FROM tasks"
-    result = db.session.execute(text(stmt))
-    all_tasks = []
-    for task in result:
-        all_tasks.append({'id': task[0], 'name': task[1], 'task_date': task[2], 'task': task[3], 'closed': task[4]})
-    return {'tasks': all_tasks}
-
-
-@app.route('/users')
-def database():
-    stmt = text('SELECT * FROM users')
-    result = db.session.execute(stmt)
-    users = []
-    for row in result:
-        users.append({'id': row[0], 'username': row[1], 'email': row[2],
-                      'password': "prohibited"})
-    return {'users': users}
-
-
 @app.errorhandler(500)
 def internal_server_error(error):
     return "Erreur interne du serveur", 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+app.run(debug=True)
