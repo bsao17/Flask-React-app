@@ -61,7 +61,6 @@ def signup():
         # Vérifier que les mots de passe sont identiques
         if request.form['password'] != request.form['confirm']:
             flash('Les mots de passe ne correspondent pas.', "connection_failed")
-            print(current_user)
             return render_template('signup.html', form=form)
         else:
             # Enregistrer l'utilisateur
@@ -69,8 +68,12 @@ def signup():
             db.session.commit()
 
         try:
-            # Confirmer l'authentification
-            login_user(user)
+            login_user(user, force=True)
+            if user.is_authenticated:
+                redirect(url_for('index'))
+            else:
+                redirect(url_for('signup'))
+
             print('Inscription réussie et connexion effectuée.')
         except Exception as e:
             flash('Erreur de connexion.', "login_failed")
@@ -88,9 +91,9 @@ def logout():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html', user=current_user)
 
 
 @app.route('/')
