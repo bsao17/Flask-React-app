@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    {% block head %}
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
-    <title>To-Do Backend</title>
-    {% endblock %}
-</head>
 <body>
-    {% block body %}
-    <h1 id="title">Welcome on To-do Server</h1>
-    <form method="post" class="login_form">
-        {{form.crsf_token}}
+{% block body %}
+<h1 id="title">Welcome on To-do Server</h1>
+<form method="post" class="login_form">
+    {{form.crsf_token}}
     <div id="username_wrapper">
         <label>{{form.username.label}}</label>
         <div id="username_input">
@@ -25,37 +18,43 @@
         </div>
     </div>
     <div id="password_wrapper">
-            <label html="password">{{form.password.label}}</label>
-            <div id="password_input">
-                {{form.password()}}
-            </div>
+        <label html="password">{{form.password.label}}</label>
+        <div id="password_input">
+            {{form.password()}}
         </div>
+    </div>
     <div id="confirm_password_wrapper">
-                <label html="confirm">{{form.confirm.label}}</label>
-                <div id="confirm_input">
-                    {{form.confirm()}}
-                </div>
-            </div>
-        <button type="submit" class="button">
+        <label html="confirm">{{form.confirm.label}}</label>
+        <div id="confirm_input">
+            {{form.confirm()}}
+        </div>
+    </div>
+    <button type="submit" class="button">
             <span class="button_lg">
                 <span class="button_sl"></span>
                 <span class="button_text">S'enregistrer</span>
             </span>
-        </button>
-    </form>
-
+    </button>
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
+        {% if messages %}
         <ul class="flashes">
-          {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endwith %}
+</form>
 
-    {% endblock %}
+{% endblock %}
 </body>
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+    <title>To-Do Backend</title>
+    {% endblock %}
+</head>
 <footer>
     {% block footer %}{% endblock %}
 </footer>

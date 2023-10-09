@@ -1,4 +1,5 @@
 import os
+import dotenv
 from flask_mysqldb import MySQL, cursors
 from flask_cors import CORS
 from dotenv import load_dotenv

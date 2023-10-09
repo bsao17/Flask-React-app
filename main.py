@@ -1,8 +1,9 @@
+from flask_login import current_user
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import mapped_column, Mapped
 from werkzeug.security import generate_password_hash
-import dotenv
-from models import *
+from forms.forms import RegistrationForm, Todo_Form
+from config import *
 
 load_dotenv(dotenv_path=".flaskenv")
 
@@ -24,25 +25,6 @@ login_manager = LoginManager()
 login_manager.init_app(app=app)
 
 CORS(app)
-
-
-class Todo_Form(FlaskForm):
-    user = StringField(validators=[InputRequired(), Length(min=1, max=50)])
-    date = DateField('Date', format='%d-%m-%Y')
-    task = TextAreaField(validators=[InputRequired(), Length(max=200)])
-    closed = BooleanField('Available', default='checked')
-
-
-class RegistrationForm(Form):
-    username = StringField('Username', [validators.Length(min=4, max=25)])
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
-    password = PasswordField('Password', [
-        validators.data_required(),
-        validators.Length(min=4),
-        validators.equal_to('confirm', message="Passwords must match")
-    ])
-    confirm = PasswordField('Repeat Password')
-    accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
 
 
 @login_manager.user_loader
@@ -79,6 +61,7 @@ def signup():
         # Vérifier que les mots de passe sont identiques
         if request.form['password'] != request.form['confirm']:
             flash('Les mots de passe ne correspondent pas.', "connection_failed")
+            print(current_user)
             return render_template('signup.html', form=form)
         else:
             # Enregistrer l'utilisateur
@@ -88,7 +71,7 @@ def signup():
         try:
             # Confirmer l'authentification
             login_user(user)
-            flash('Inscription réussie et connexion effectuée.', "connection_success")
+            print('Inscription réussie et connexion effectuée.')
         except Exception as e:
             flash('Erreur de connexion.', "login_failed")
             print("Erreur d'authentification:" + str(e))
@@ -96,15 +79,6 @@ def signup():
 
         return redirect(url_for('profile'))
     return render_template('signup.html', form=form)
-
-    #
-    # Vérifier si l'utilisateur existe déjà
-    # existing_user = User.query.filter_by(username=username).first()
-    # if existing_user:
-    #     flash('Ce nom d\'utilisateur est déjà pris.')
-    #     return# render_template('signup.html', form=form)
-
-    # return redirect(url_for('home'))
 
 
 @app.route('/logout')
