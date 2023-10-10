@@ -29,20 +29,31 @@ CORS(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    def __init__(self, username, email, password):
-        self.id = user_id
-        self.username = username
-        self.email = email
-        self.password = password
+    return User.query.get(int(user_id))
 
 
-class User(Base, UserMixin):
+class User(Base, db.Model):
     __tablename__ = "user"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
-    email: Mapped[str] = mapped_column(String)
-    password: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    username: Mapped[str] = mapped_column(String, nullable=False)
+    email: Mapped[str] = mapped_column(String, nullable=False)
+    password: Mapped[str] = mapped_column(String, nullable=False)
+
+    def is_active(self):
+        return True
+
+    def is_authenticated(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        try:
+            return str(self.id)
+        except AttributeError:
+            raise NotImplementedError("No `id` attribute - override `get_id`") from None
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -61,7 +72,6 @@ def signup():
         # Vérifier que les mots de passe sont identiques
         if request.form['password'] != request.form['confirm']:
             flash('Les mots de passe ne correspondent pas.', "connection_failed")
-            print(current_user)
             return render_template('signup.html', form=form)
         else:
             # Enregistrer l'utilisateur
@@ -69,11 +79,9 @@ def signup():
             db.session.commit()
 
         try:
-            # Confirmer l'authentification
             login_user(user)
             print('Inscription réussie et connexion effectuée.')
         except Exception as e:
-            flash('Erreur de connexion.', "login_failed")
             print("Erreur d'authentification:" + str(e))
             redirect(url_for('signup'))
 
@@ -90,7 +98,7 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html', user=current_user)
 
 
 @app.route('/')
