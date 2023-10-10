@@ -2,7 +2,7 @@ from flask_login import current_user
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import mapped_column, Mapped
 from werkzeug.security import generate_password_hash
-from forms.forms import RegistrationForm, Todo_Form
+from forms.forms import RegistrationForm
 from config import *
 
 load_dotenv(dotenv_path=".flaskenv")
@@ -44,7 +44,7 @@ class User(Base, db.Model):
         return True
 
     def is_authenticated(self):
-        return True
+        return self.is_active
 
     def is_anonymous(self):
         return False
