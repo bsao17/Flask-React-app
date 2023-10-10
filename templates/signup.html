@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    {% block script %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+    {% endblock %}
+    <title>To-Do Backend</title>
+    {% endblock %}
+</head>
 <body>
 {% block body %}
 <h1 id="title">Welcome on To-do Server</h1>
@@ -40,21 +49,15 @@
         <ul class="flashes">
         {% for category, message in messages %}
         <li class="{{ category }}">{{ message }}</li>
-    {% endfor %}
+        {% endfor %}
 </ul>
-{% endif %}
-{% endwith %}
+        {% endif %}
+    {% endwith %}
 </form>
 
 {% endblock %}
 </body>
-<head>
-    {% block head %}
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
-    <title>To-Do Backend</title>
-    {% endblock %}
-</head>
+<!-- Footer -->
 <footer>
     {% block footer %}{% endblock %}
 </footer>

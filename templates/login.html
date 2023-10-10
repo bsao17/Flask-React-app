@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentification</title>
+</head>
+<body>
+    {% block body %}
+    <h1>Bienvenue sur m To-Do application</h1>
+    <form method="post" class="login_form">
+        <div id="email_wrapper">
+            <label>Username</label>
+            <div id="email_input">
+                {{form.email()}}
+            </div>
+        </div>
+        <div id="password_wrapper">
+            <label>Password</label>
+            <div id="password_input">
+                {{form.password()}}
+            </div>
+        </div>
+        <button type="submit" class="button">
+    {% endblock %}
+</body>
+</html>
