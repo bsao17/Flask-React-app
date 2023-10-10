@@ -1,11 +1,20 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% block script %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/profile.css')}}"/>
+    {% endblock %}
     <title>profile</title>
 </head>
 <body>
+    {% block body %}
     <h1>Bienvenue sur votre page de profile </h1>
-    <p>Utilisateur: {{ user.username }}</p>
+    <p>Nom d'utilisateur: {{ user.username }}</p>
+    <p>E-mail de l'utilisateur: {{ user.email }}</p>
+    <!--decrypt hash password-->
+    <p>Mot de passe de l'utilisateur: {{ user.password }}</p>
+    {% endblock %}
 </body>
 </html>
