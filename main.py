@@ -188,5 +188,5 @@ Returns:
 def internal_server_error(error):
     return "Erreur interne du serveur", 500
 
-
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
