@@ -3,30 +3,9 @@ from sqlalchemy import Integer, String, Boolean
 from sqlalchemy.orm import mapped_column, Mapped
 from werkzeug.security import generate_password_hash
 
-from forms import forms
-from forms.forms import RegistrationForm, login_user
 from config import *
-
-load_dotenv(dotenv_path=".flaskenv")
-
-app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY")
-
-
-class Base(DeclarativeBase):
-    pass
-
-
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
-db = SQLAlchemy(model_class=Base)
-db.init_app(app)
-with app.app_context():
-    db.create_all()
-
-login_manager = LoginManager()
-login_manager.init_app(app=app)
-
-CORS(app)
+from forms import forms
+from forms.forms import RegistrationForm
 
 """
 Load a user from the database based on the given user ID.
@@ -45,8 +24,6 @@ def load_user(user_id):
 
 
 class User(Base, db.Model, UserMixin):
-    __tablename__ = "user"
-
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     username: Mapped[str] = mapped_column(String, nullable=False)
     email: Mapped[str] = mapped_column(String, nullable=False)
@@ -122,16 +99,19 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = forms.Login_form(UserMixin)
-    if request.method == 'POST':
+    form = forms.Login_form()
+    if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Identifiants incorrects.', "connection_failed")
+            return render_template('login.html', form=form)
         try:
             login_user(user)
             print('Connexion effectuée.')
             return redirect(url_for('profile'))
         except Exception as e:
             print("Erreur d'authentification:" + str(e))
-        return redirect(url_for('profile'))
+            flash(f"Erreur d'authentification : {str(e)}", "connection_failed")
     return render_template('login.html', form=form)
 
 
