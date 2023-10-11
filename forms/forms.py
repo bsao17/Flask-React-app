@@ -17,6 +17,11 @@ class Login_form(Form):
     ])
     confirm = PasswordField('Repeat Password')
 
+    def validate_on_submit(self):
+        if not super(Login_form, self.validate()):
+            return False
+        return True
+
 
 class RegistrationForm(Form):
     username = StringField('Username', [validators.Length(min=4, max=25)])
