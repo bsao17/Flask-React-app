@@ -63,37 +63,40 @@ Returns:
 def signup():
     form = RegistrationForm()
     if request.method == 'POST':
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-        hash_password = generate_password_hash(request.form['password'], "sha256")
-        confirm = request.form["confirm"]
-        user = User(
-            username=username,
-            email=email,
-            password=hash_password,
-            is_active=True,
-            is_authenticated=True,
-            is_anonymous=False,
-        )
+        if form.validate_on_submit():
+            username = request.form["username"]
+            email = request.form["email"]
+            password = request.form["password"]
+            hash_password = generate_password_hash(request.form['password'], "sha256")
+            confirm = request.form["confirm"]
+            user = User(
+                username=username,
+                email=email,
+                password=hash_password,
+                is_active=True,
+                is_authenticated=True,
+                is_anonymous=False,
+            )
 
-        # Vérifier que les mots de passe sont identiques
-        if password != confirm:
-            flash('Les mots de passe ne correspondent pas.', "connection_failed")
-            return render_template('signup.html', form=form)
+            # Vérifier que les mots de passe sont identiques
+            if password != confirm:
+                flash('Les mots de passe ne correspondent pas.', "connection_failed")
+                return render_template('signup.html', form=form)
+            else:
+                # Enregistrer l'utilisateur
+                db.session.add(user)
+                db.session.commit()
+
+            try:
+                login_user(user)
+                print('Inscription réussie et connexion effectuée.')
+            except Exception as e:
+                print("Erreur d'authentification:" + str(e))
+                redirect(url_for('signup'))
+
+            return redirect(url_for('profile'))
         else:
-            # Enregistrer l'utilisateur
-            db.session.add(user)
-            db.session.commit()
-
-        try:
-            login_user(user)
-            print('Inscription réussie et connexion effectuée.')
-        except Exception as e:
-            print("Erreur d'authentification:" + str(e))
-            redirect(url_for('signup'))
-
-        return redirect(url_for('profile'))
+            print(form.errors)
     return render_template('signup.html', form=form)
 
 

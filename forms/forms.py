@@ -27,4 +27,4 @@ class RegistrationForm(FlaskForm):
         validators.equal_to('confirm', message="Passwords must match")
     ])
     confirm = PasswordField('Repeat Password')
-    accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])
+    #accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])

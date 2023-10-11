@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% block script %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}"/>
+    {% endblock %}
     <title>Authentification</title>
 </head>
 <body>
     {% block body %}
-    <h1>Bienvenue sur To-Do application</h1>
+    <h1 id="title">Bienvenue sur To-Do application</h1>
     <form method="post" class="login_form">
+        {{ form.hidden_tag() }}
         <div id="email_wrapper">
-            <label>Username</label>
+            <label>Email</label>
             <div id="email_input">
                 {{form.email()}}
             </div>
@@ -20,11 +24,19 @@
                 {{form.password()}}
             </div>
         </div>
-        <button type="submit" class="button">Se connecter</button>
+        <button type="submit" class="button">
+            <span class="button_lg">
+                <span class="button_sl"></span>
+                <span class="button_text">S'enregistrer</span>
+            </span>
+    </button>
 
-        {% for message in get_flashed_messages() %}
-        <p>{{message}}</p>
-        {% endfor %}
+    {% for messages in get_flashed_messages() %}
+    <ul class="flashes">
+        <li class="{{ category }}">{{ message }}</li>
+    </ul>
+    {% endfor %}
+    </form>
     {% endblock %}
 </body>
 </html>
