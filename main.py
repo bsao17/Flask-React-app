@@ -1,11 +1,11 @@
-from flask_login import current_user
+from flask import request, flash, render_template, redirect, url_for
 from sqlalchemy import Integer, String, Boolean
 from sqlalchemy.orm import mapped_column, Mapped
 from werkzeug.security import generate_password_hash
-
 from config import *
-from forms import forms
-from forms.forms import RegistrationForm
+from forms.forms import RegistrationForm, Login_form
+from flask_login import current_user, UserMixin, login_required, login_user, logout_user
+from sqlalchemy import text
 
 """
 Load a user from the database based on the given user ID.
@@ -102,7 +102,7 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = forms.Login_form()
+    form = Login_form()
     if request.method == 'POST' and form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None or not user.check_password(form.password.data):

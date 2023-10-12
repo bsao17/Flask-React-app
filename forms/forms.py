@@ -1,4 +1,6 @@
-from config import *
+from flask_wtf import FlaskForm, Form
+from wtforms import StringField, TextAreaField, BooleanField, DateField, validators, PasswordField
+from wtforms.validators import InputRequired, Length
 
 
 class Todo_Form(Form):
@@ -27,4 +29,3 @@ class RegistrationForm(FlaskForm):
         validators.equal_to('confirm', message="Passwords must match")
     ])
     confirm = PasswordField('Repeat Password')
-    #accept_rules = BooleanField('I accept the site rules', [validators.InputRequired()])

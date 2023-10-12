@@ -195,8 +195,6 @@ html, body {
 }
 
 #username, #email, #password, #confirm {
-    margin: 10px;
-    margin: 30px;
     background: none;
     border: none;
     outline: none;
@@ -206,6 +204,31 @@ html, body {
     border-radius: 9999px;
     box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
     color: #000000;
+}
+
+#username, #email, #password, #confirm {
+    margin: 10px;
+    padding: 15px 20px;
+    outline: none;
+    background: aliceblue;
+    border-radius: 5px;
+    color: #212121;
+    border: 1px solid#212121;
+    font-size: 1rem;
+}
+
+.span-email, .span-username, .span-password, .span-confirm {
+    position: absolute;
+    left: 0px;
+    font-size: 0.7em;
+    transform: translateX(14px) translateY(-7.5px);
+    padding: 0 6px 1px 5px;
+    border-radius: 2px;
+    background: #e8e8e8;
+    letter-spacing: 1px;
+    border: 1px solid #212121;
+    color: #212121;
+    z-index:1000
 }
 
 .connection_success {
