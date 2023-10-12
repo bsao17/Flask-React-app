@@ -21,11 +21,12 @@ class Login_form(FlaskForm):
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', [validators.Length(min=4, max=25)])
-    email = StringField('Email Address', [validators.Length(min=6, max=35)])
+    username = StringField('Username', [validators.Length(min=4, max=25)],
+                           render_kw={"autofocus": True, "placeholder": "Username"})
+    email = StringField('Email Address', [validators.Length(min=6, max=35)], render_kw={"placeholder": "Email"})
     password = PasswordField('Password', [
         validators.data_required(),
         validators.Length(min=4),
-        validators.equal_to('confirm', message="Passwords must match")
-    ])
-    confirm = PasswordField('Repeat Password')
+        validators.equal_to('confirm', message="Passwords must match")],
+        render_kw={"placeholder": "Password"})
+    confirm = PasswordField('Repeat Password', render_kw={"placeholder": "Repeat Password"})
