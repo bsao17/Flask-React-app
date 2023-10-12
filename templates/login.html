@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{%extends "base.html"%}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,16 +14,18 @@
     <form method="post" class="login_form">
         {{ form.hidden_tag() }}
         <div id="email_wrapper">
-            <label>Email</label>
+            <span class="span-email">Email :</span>
             <div id="email_input">
                 {{form.email()}}
             </div>
         </div>
         <div id="password_wrapper">
-            <label>Password</label>
+
+            <span class="span-password">Password :</span>
             <div id="password_input">
                 {{form.password()}}
             </div>
+
         </div>
         <button type="submit" class="button">
             <span class="button_lg">

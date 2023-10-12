@@ -5,7 +5,7 @@
     {% block head %}
     <meta charset="UTF-8">
     {% block script %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/signup.css')}}"/>
     {% endblock %}
     <title>To-Do Backend</title>
     {% endblock %}
@@ -16,25 +16,25 @@
 <form method="post" class="login_form">
     {{ form.hidden_tag() }}
     <div id="username_wrapper">
-        <label>{{form.username.label}}</label>
+        <span class="span-username">{{form.username.label}}</span>
         <div id="username_input">
             {{form.username()}}
         </div>
     </div>
     <div id="email_wrapper">
-        <label html="email">{{form.email.label}}</label>
+        <span class="span-email">{{form.email.label}}</span>
         <div id="email_input">
             {{form.email()}}
         </div>
     </div>
     <div id="password_wrapper">
-        <label html="password">{{form.password.label}}</label>
+        <span class="span-password" html="password">{{form.password.label}}</span>
         <div id="password_input">
             {{form.password()}}
         </div>
     </div>
     <div id="confirm_password_wrapper">
-        <label html="confirm">{{form.confirm.label}}</label>
+        <span class="span-confirm" html="confirm">{{form.confirm.label}}</span>
         <div id="confirm_input">
             {{form.confirm()}}
         </div>
