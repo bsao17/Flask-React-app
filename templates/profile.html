@@ -10,11 +10,16 @@
 </head>
 <body>
     {% block body %}
-    <h1>Bienvenue sur votre page de profile </h1>
-    <p>Nom d'utilisateur: {{ user.username }}</p>
-    <p>E-mail de l'utilisateur: {{ user.email }}</p>
-    <!--decrypt hash password-->
-    <p>Mot de passe de l'utilisateur: {{ user.password }}</p>
+    <h1 id="title">Bienvenue sur votre page de profile </h1>
+
+    <div class="card">
+      <div class="image"></div>
+      <div class="card-info">
+        <span>{{ user.username }}</span>
+        <p>{{ user.email }}</p>
+      </div>
+      <a href="#" class="button">Modifier</a>
+    </div>
     {% endblock %}
 </body>
 </html>
