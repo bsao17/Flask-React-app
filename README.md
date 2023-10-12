@@ -33,3 +33,11 @@ Start the server
   py main.py
 ```
 
+## Signup API page
+
+![Logo](./static/assets/signup.png)
+
+## Profile page
+
+![Logo](./static/assets/profile.png)
+
